@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirPods 4th Gen Case – RequitDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #b8924e;
+    --accent2: #a6804a;
+    --dark: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f9f9f9;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --accent-text: #1a1000;
+    --font: 'DM Sans', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 52px;
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-size: 15px; color: #ffffff; text-decoration: none;
+    font-weight: 700; letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px; color: #ffffff;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-size: 13px; padding: 7px 18px;
+    background: var(--accent); color: var(--accent-text);
+    border-radius: 20px; text-decoration: none; font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--accent2); transform: scale(1.03); }
+
+  .product-hero {
+    padding: 120px 48px 80px;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+
+  .product-hero-image {
+    border-radius: 24px; overflow: hidden;
+    aspect-ratio: 1;
+    position: relative;
+  }
+
+  .product-carousel {
+    position: relative;
+    width: 100%; height: 100%;
+  }
+
+  .product-carousel img {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; top: 0; left: 0;
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+
+  .product-carousel img.active {
+    opacity: 1;
+  }
+
+  .carousel-nav {
+    position: absolute; bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px;
+  }
+
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer; transition: background 0.2s;
+  }
+
+  .carousel-dot.active {
+    background: var(--accent);
+  }
+
+  .carousel-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px;
+    background: rgba(0,0,0,0.3); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s;
+    color: white; font-size: 18px; font-weight: bold;
+  }
+
+  .carousel-arrow:hover {
+    background: rgba(0,0,0,0.6);
+  }
+
+  .carousel-arrow.left {
+    left: 12px;
+  }
+
+  .carousel-arrow.right {
+    right: 12px;
+  }
+
+  .product-hero-content h1 {
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 600; letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .product-desc {
+    font-size: 16px; color: var(--muted); line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .product-price {
+    font-size: 32px; font-weight: 600; color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .product-options {
+    margin-bottom: 32px;
+  }
+
+  .option-group {
+    margin-bottom: 24px;
+  }
+
+  .option-label {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px; display: block;
+  }
+
+  .color-options {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+
+  .color-option {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+    position: relative;
+  }
+
+  .color-option:hover {
+    transform: scale(1.1);
+  }
+
+  .color-option.selected {
+    border-color: var(--accent);
+  }
+
+  .color-option.black { background: #1a1a1a; }
+  .color-option.white { background: #f5f5f7; }
+  .color-option.chrome { background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%); }
+
+  .quantity-selector {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .quantity-btn {
+    width: 36px; height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 18px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .quantity-btn:hover {
+    background: var(--surface2);
+  }
+
+  .quantity-input {
+    width: 60px; height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    text-align: center;
+    font-size: 16px; font-weight: 600;
+  }
+
+  .add-to-cart-btn {
+    display: inline-block;
+    padding: 16px 40px; border-radius: 30px;
+    background: var(--accent); color: var(--accent-text);
+    text-decoration: none; font-size: 16px; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer; border: none;
+    margin-right: 16px;
+  }
+
+  .add-to-cart-btn:hover { background: var(--accent2); transform: scale(1.04); }
+
+  .cart-notification {
+    position: fixed; top: 80px; right: 48px;
+    background: var(--accent); color: var(--accent-text);
+    padding: 12px 24px; border-radius: 8px;
+    font-weight: 600; font-size: 14px;
+    opacity: 0; transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .cart-notification.show {
+    opacity: 1; transform: translateY(0);
+  }
+
+  .features-section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 48px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .features-section h2 {
+    font-size: 36px; font-weight: 600; letter-spacing: -0.02em;
+    margin-bottom: 48px;
+  }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .feature {
+    padding: 32px; background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .feature h3 {
+    font-size: 18px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .feature p {
+    font-size: 14px; color: var(--muted); line-height: 1.6;
+  }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: start;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--text); margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 300px;
+  }
+
+  .footer-links { display: flex; gap: 48px; }
+
+  .footer-col h4 {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+
+  .footer-col a {
+    display: block; font-size: 13px; color: var(--muted);
+    text-decoration: none; margin-bottom: 10px; transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 0.5px solid var(--border);
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-bottom p { font-size: 12px; color: var(--muted); }
+
+  .footer-socials { display: flex; gap: 20px; }
+
+  .footer-socials a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.2s;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .product-hero { grid-template-columns: 1fr; gap: 40px; padding: 120px 24px 60px; }
+    .features-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; padding: 40px 24px; }
+    .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .cart-notification { right: 20px; }
+  }
+</style>
+
+<script>
+  // Product Carousel
+  class ProductCarousel {
+    constructor() {
+      this.images = [
+        './bilder/gen4_case_viewFront.jpg',
+        './bilder/gen4_case_black.jpg',
+        './bilder/gen4_case_chrome.jpg',
+        './bilder/gen4_case_viewBack.jpg'
+      ];
+      this.currentIndex = 0;
+      this.init();
+    }
+
+    init() {
+      this.createCarousel();
+      this.createNavigation();
+      this.showImage(0);
+      this.bindEvents();
+    }
+
+    createCarousel() {
+      const carousel = document.querySelector('.product-carousel');
+      carousel.innerHTML = '';
+
+      this.images.forEach((src, index) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `AirPods Gen4 Case View ${index + 1}`;
+        if (index === 0) img.classList.add('active');
+        carousel.appendChild(img);
+      });
+    }
+
+    createNavigation() {
+      const heroImage = document.querySelector('.product-hero-image');
+
+      // Dots
+      const dotsContainer = document.createElement('div');
+      dotsContainer.className = 'carousel-nav';
+
+      this.images.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => this.showImage(index));
+        dotsContainer.appendChild(dot);
+      });
+
+      // Arrows
+      const leftArrow = document.createElement('div');
+      leftArrow.className = 'carousel-arrow left';
+      leftArrow.innerHTML = '‹';
+      leftArrow.addEventListener('click', () => this.prevImage());
+
+      const rightArrow = document.createElement('div');
+      rightArrow.className = 'carousel-arrow right';
+      rightArrow.innerHTML = '›';
+      rightArrow.addEventListener('click', () => this.nextImage());
+
+      heroImage.appendChild(leftArrow);
+      heroImage.appendChild(rightArrow);
+      heroImage.appendChild(dotsContainer);
+    }
+
+    showImage(index) {
+      const images = document.querySelectorAll('.product-carousel img');
+      const dots = document.querySelectorAll('.carousel-dot');
+
+      images.forEach(img => img.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      images[index].classList.add('active');
+      dots[index].classList.add('active');
+      this.currentIndex = index;
+    }
+
+    nextImage() {
+      const nextIndex = (this.currentIndex + 1) % this.images.length;
+      this.showImage(nextIndex);
+    }
+
+    prevImage() {
+      const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+      this.showImage(prevIndex);
+    }
+
+    showColorImage(color) {
+      const colorToIndex = {
+        'schwarz': 1,
+        'chrome': 2
+      };
+      const index = colorToIndex[color] || 0;
+      this.showImage(index);
+    }
+
+    bindEvents() {
+      // Touch/swipe support
+      let startX = 0;
+      const carousel = document.querySelector('.product-carousel');
+
+      carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+
+      carousel.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) this.nextImage();
+          else this.prevImage();
+        }
+      });
+    }
+  }
+
+  // Color Selection
+  class ColorSelector {
+    constructor() {
+      this.selectedColor = 'black';
+      this.init();
+    }
+
+    init() {
+      const colorOptions = document.querySelectorAll('.color-option');
+      colorOptions.forEach(option => {
+        option.addEventListener('click', () => this.selectColor(option));
+      });
+      this.selectColor(document.querySelector('.color-option.black'));
+    }
+
+    selectColor(option) {
+      document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+      this.selectedColor = option.dataset.color;
+      document.getElementById('selected-color').textContent = this.selectedColor;
+      
+      // Show the corresponding color image
+      if (window.carousel) {
+        window.carousel.showColorImage(this.selectedColor);
+      }
+    }
+  }
+
+  // Quantity Selector
+  class QuantitySelector {
+    constructor() {
+      this.quantity = 1;
+      this.init();
+    }
+
+    init() {
+      const minusBtn = document.querySelector('.quantity-btn.minus');
+      const plusBtn = document.querySelector('.quantity-btn.plus');
+      const input = document.querySelector('.quantity-input');
+
+      minusBtn.addEventListener('click', () => this.decrease());
+      plusBtn.addEventListener('click', () => this.increase());
+      input.addEventListener('change', (e) => this.setQuantity(parseInt(e.target.value) || 1));
+
+      this.updateDisplay();
+    }
+
+    increase() {
+      this.quantity++;
+      this.updateDisplay();
+    }
+
+    decrease() {
+      if (this.quantity > 1) {
+        this.quantity--;
+        this.updateDisplay();
+      }
+    }
+
+    setQuantity(qty) {
+      this.quantity = Math.max(1, qty);
+      this.updateDisplay();
+    }
+
+    updateDisplay() {
+      document.querySelector('.quantity-input').value = this.quantity;
+    }
+  }
+
+  // Shopping Cart
+  class ShoppingCart {
+    constructor() {
+      this.cart = JSON.parse(localStorage.getItem('requitdesign-cart')) || [];
+      this.init();
+    }
+
+    init() {
+      const addToCartBtn = document.querySelector('.add-to-cart-btn');
+      addToCartBtn.addEventListener('click', () => this.addToCart());
+    }
+
+    addToCart() {
+      const colorSelector = window.colorSelector;
+      const quantitySelector = window.quantitySelector;
+
+      const product = {
+        id: 'airpods-gen4',
+        name: 'Signature Case — Gen 4',
+        color: colorSelector.selectedColor,
+        quantity: quantitySelector.quantity,
+        price: 26.99,
+        image: './bilder/gen4_case_viewFront.jpg'
+      };
+
+      // Check if product already in cart
+      const existingIndex = this.cart.findIndex(item =>
+        item.id === product.id && item.color === product.color
+      );
+
+      if (existingIndex > -1) {
+        this.cart[existingIndex].quantity += product.quantity;
+      } else {
+        this.cart.push(product);
+      }
+
+      this.saveCart();
+      this.showNotification();
+    }
+
+    saveCart() {
+      localStorage.setItem('requitdesign-cart', JSON.stringify(this.cart));
+    }
+
+    showNotification() {
+      const notification = document.querySelector('.cart-notification');
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+  }
+
+  // Initialize everything when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    window.carousel = new ProductCarousel();
+    window.colorSelector = new ColorSelector();
+    window.quantitySelector = new QuantitySelector();
+    window.shoppingCart = new ShoppingCart();
+
+    // Update cart count display
+    updateCartCount();
+  });
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('requitdesign-cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+  }
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="Requitdesign-1.html" class="nav-logo">RequitDesign</a>
+  <ul class="nav-links">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="cart.html" class="nav-cta">Cart (<span id="cart-count">0</span>)</a>
+</nav>
+
+<div class="product-hero">
+  <div class="product-hero-image">
+    <div class="product-carousel">
+      <img src="./bilder/gen4_case_viewFront.jpg" alt="AirPods 4th Gen Case" class="active">
+    </div>
+  </div>
+  <div class="product-hero-content">
+    <div class="product-tag">AirPods 4. Generation</div>
+    <h1>Signature Case — Gen 4</h1>
+    <p class="product-desc">
+      The newest AirPods deserve the newest case. Futuristic form meets everyday function. Our Gen 4 case is engineered for the latest AirPods with cutting-edge design and premium protection.
+    </p>
+    <div class="product-price">ab €26,99</div>
+
+    <div class="product-options">
+      <div class="option-group">
+        <label class="option-label">Farbe: <span id="selected-color">schwarz</span></label>
+        <div class="color-options">
+          <div class="color-option black selected" data-color="schwarz"></div>
+          <div class="color-option chrome" data-color="chrome"></div>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label class="option-label">Anzahl</label>
+        <div class="quantity-selector">
+          <button class="quantity-btn minus">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button class="quantity-btn plus">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button class="add-to-cart-btn">In den Einkaufswagen</button>
+    </div>
+  </div>
+</div>
+
+<div class="cart-notification">
+  Produkt zum Einkaufswagen hinzugefügt!
+</div>
+
+<div class="features-section">
+  <h2>Why Choose Gen 4 Case?</h2>
+  
+  <div class="features-grid">
+    <div class="feature">
+      <h3>Future-Ready</h3>
+      <p>Designed specifically for AirPods 4th Generation. Latest technology deserves cutting-edge protection and style.</p>
+    </div>
+    <div class="feature">
+      <h3>Premium Materials</h3>
+      <p>Carefully selected materials for durability and premium feel. Built to withstand daily use and last for years.</p>
+    </div>
+    <div class="feature">
+      <h3>Modern Aesthetics</h3>
+      <p>Bold, contemporary design that complements modern devices. A case that's as stylish as your AirPods.</p>
+    </div>
+    <div class="feature">
+      <h3>Secure Fit</h3>
+      <p>Precision engineering ensures perfect fit and secure hold. Your AirPods 4 stay protected at all times.</p>
+    </div>
+    <div class="feature">
+      <h3>Limited Edition</h3>
+      <p>Small batch production means exclusivity. Each case is crafted with care and attention to detail.</p>
+    </div>
+    <div class="feature">
+      <h3>Easy Access</h3>
+      <p>Unobstructed charging port access. Remove the case only when needed. Seamless integration with your device.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">RequitDesign</div>
+    <p class="footer-tagline">Unique AirPods Cases. Premium quality. Limited availability. Designed for those who stand out.</p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="products.html">All Products</a>
+      <a href="product-pro.html">AirPods Pro Case</a>
+      <a href="product-gen4.html">AirPods 4th Gen Case</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="shipping-policy.html">Shipping</a>
+    </div>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  <p>© 2025 RequitDesign. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="http://instagram.com/requitdesign" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@requitdesign" target="_blank">TikTok</a>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+

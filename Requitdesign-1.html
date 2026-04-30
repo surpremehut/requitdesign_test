@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RequitDesign – Unique AirPods Cases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #b8924e;
+    --accent2: #a6804a;
+    --dark: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f9f9f9;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --accent-text: #1a1000;
+    --font: 'DM Sans', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 52px;
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; letter-spacing: 0.05em;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px; color: white;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: white; }
+
+  .nav-cta {
+    font-size: 13px; padding: 7px 18px;
+    background: var(--accent); color: var(--accent-text);
+    border-radius: 20px; text-decoration: none; font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+.nav-cta:hover { background: var(--accent2); transform: scale(1.03); color: var(--accent-text); }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    position: relative; overflow: hidden;
+    padding: 120px 24px 80px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://www.requitdesign.com/cdn/shop/files/schwarz.jpg?v=1769554911&width=3840');
+    background-size: cover; background-position: center;
+    filter: brightness(0.35);
+    transform: scale(1.05);
+    transition: transform 8s ease;
+  }
+
+  .hero:hover .hero-bg { transform: scale(1.0); }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: white; border: 1px solid white;
+    padding: 5px 16px; border-radius: 20px;
+    margin-bottom: 28px; position: relative;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 600; line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: white;
+    position: relative;
+    animation: fadeUp 0.9s ease 0.1s both;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  .hero-sub {
+    font-size: 21px; color: var(--muted);
+    margin-top: 20px; max-width: 480px;
+    font-weight: 300; line-height: 1.5;
+    position: relative;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; margin-top: 40px;
+    position: relative;
+    animation: fadeUp 1s ease 0.35s both;
+  }
+
+  .btn-primary {
+    padding: 14px 32px; border-radius: 30px;
+    background: var(--accent); color: var(--accent-text);
+    text-decoration: none; font-size: 15px; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: scale(1.04); }
+
+  .btn-ghost {
+    padding: 14px 32px; border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white; text-decoration: none; font-size: 15px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); transform: scale(1.04); }
+
+  .hero-scroll {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-scroll span {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .scroll-arrow {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600; letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  .section-sub {
+    font-size: 17px; color: var(--muted);
+    line-height: 1.6; margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* PRODUCTS SECTION */
+  .products {
+    padding: 120px 48px;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .products-header {
+    text-align: center; margin-bottom: 72px;
+  }
+
+  .product-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 24px; overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s ease, border-color 0.3s;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,169,126,0.35);
+  }
+
+  .product-img-wrap {
+    position: relative; overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #161616;
+  }
+
+  .product-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease, opacity 0.4s;
+    display: block;
+  }
+
+  .product-img-wrap .img-hover {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.45s;
+  }
+
+  .product-card:hover .img-hover { opacity: 1; }
+  .product-card:hover .img-main { opacity: 0; }
+
+  .product-info {
+    padding: 28px 32px 32px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .product-tag {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .product-name {
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.01em; color: var(--text);
+  }
+
+  .product-desc {
+    font-size: 14px; color: var(--muted); line-height: 1.6;
+    margin-top: 4px;
+  }
+
+  .product-footer {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-top: 20px;
+  }
+
+  .product-price {
+    font-size: 20px; font-weight: 500; color: var(--text);
+  }
+
+  .product-price small {
+    font-size: 13px; color: var(--muted); font-weight: 300;
+  }
+
+  .product-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid var(--accent);
+    color: var(--accent); padding: 9px 22px; border-radius: 20px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .product-btn:hover {
+    background: var(--accent); color: var(--accent-text);
+  }
+
+  /* FEATURE STRIP */
+  .feature-strip {
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 60px 48px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 100%;
+  }
+
+  .feature-item {
+    padding: 24px 48px;
+    text-align: center;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .feature-item:last-child { border-right: none; }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,169,126,0.12);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 20px;
+  }
+
+  .feature-title {
+    font-size: 15px; font-weight: 600; color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .feature-desc {
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    max-width: 1200px; margin: 0 auto;
+    padding: 120px 48px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+
+  .about-image {
+    border-radius: 24px; overflow: hidden;
+    aspect-ratio: 4/5;
+    position: relative;
+  }
+
+  .about-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+  }
+
+  .about-image::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,169,126,0.1), transparent);
+    pointer-events: none;
+  }
+
+  .about-content { display: flex; flex-direction: column; gap: 20px; }
+
+  .about-text {
+    font-size: 16px; color: var(--muted); line-height: 1.8;
+  }
+
+  .about-stat-row {
+    display: flex; gap: 32px; margin-top: 8px;
+  }
+
+  .about-stat { display: flex; flex-direction: column; gap: 4px; }
+
+  .about-stat-num {
+    font-size: 36px; font-weight: 600; color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .about-stat-label {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* REVIEWS */
+  .reviews {
+    padding: 100px 48px;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .reviews-header {
+    text-align: center; margin-bottom: 64px;
+  }
+
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+
+  .review-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 20px; padding: 32px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .review-card:hover {
+    border-color: rgba(200,169,126,0.3);
+    transform: translateY(-4px);
+  }
+
+  .stars {
+    display: flex; gap: 4px; margin-bottom: 16px;
+    color: var(--accent); font-size: 14px;
+  }
+
+  .review-text {
+    font-size: 15px; color: var(--text);
+    line-height: 1.7; font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .reviewer-name {
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    margin: 0 48px 80px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #1c1400 0%, #2a1e00 50%, #1a1a1a 100%);
+    border: 0.5px solid rgba(200,169,126,0.25);
+    padding: 80px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center top, rgba(200,169,126,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-banner h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 600; letter-spacing: -0.02em;
+    color: var(--text);
+    position: relative;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  .cta-banner p {
+    font-size: 16px; color: var(--muted); margin: 16px 0 36px;
+    position: relative;
+  }
+
+  .cta-banner a { position: relative; }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: start;
+    max-width: 100%;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+    max-width: 300px;
+  }
+
+  .footer-links {
+    display: flex; gap: 48px;
+  }
+
+  .footer-col h4 {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+
+  .footer-col a {
+    display: block; font-size: 13px; color: var(--muted);
+    text-decoration: none; margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 0.5px solid var(--border);
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-bottom p {
+    font-size: 12px; color: var(--muted);
+  }
+
+  .footer-socials {
+    display: flex; gap: 20px;
+  }
+
+  .footer-socials a {
+    font-size: 12px; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="Requitdesign-1.html" class="nav-logo">RequitDesign</a>
+  <ul class="nav-links">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="cart.html" class="nav-cta">Cart (<span id="cart-count">0</span>)</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">New Collection 2025</div>
+  <h1>Design is<br>Everything.</h1>
+  <p class="hero-sub">Premium AirPods Cases crafted for those who refuse to blend in.</p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Explore Products</a>
+    <a href="#about" class="btn-ghost">Our Story</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- FEATURE STRIP -->
+<div class="feature-strip">
+  <div class="feature-item reveal">
+    <div class="feature-icon">✦</div>
+    <div class="feature-title">Premium Quality</div>
+    <div class="feature-desc">Materials selected for longevity and feel. Every case built to last.</div>
+  </div>
+  <div class="feature-item reveal reveal-delay-1">
+    <div class="feature-icon">◈</div>
+    <div class="feature-title">Limited Edition</div>
+    <div class="feature-desc">Small batches. Unique designs. You won't see them everywhere.</div>
+  </div>
+  <div class="feature-item reveal reveal-delay-2">
+    <div class="feature-icon">⬡</div>
+    <div class="feature-title">Perfect Fit</div>
+    <div class="feature-desc">Engineered to snap on and stay put. No wobble, no guessing.</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" class="products">
+  <div class="products-header reveal">
+    <div class="section-label">Our Products</div>
+    <h2 class="section-title">Cases Built to Stand Out</h2>
+    <p class="section-sub">Two models. Infinite personality.</p>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- Product 1: Pro -->
+    <div class="product-card reveal">
+      <div class="product-img-wrap">
+        <img class="img-main" src="https://www.requitdesign.com/cdn/shop/files/IMG-2942.jpg?v=1769554911&width=800" alt="AirPod Case Pro">
+        <img class="img-hover" src="https://www.requitdesign.com/cdn/shop/files/IMG_0196.jpg?v=1769554911&width=800" alt="AirPod Case Pro – Alternate View">
+      </div>
+      <div class="product-info">
+        <div class="product-tag">AirPods Pro 1 &amp; 2</div>
+        <div class="product-name">Signature Case — Pro</div>
+        <div class="product-desc">Sculptural protection for your AirPods Pro. Crafted with premium materials, designed with intention.</div>
+        <div class="product-footer">
+          <div class="product-price">ab €26,99 <small>EUR</small></div>
+          <a href="product-pro.html" class="product-btn">
+            View Details →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2: 4th Gen -->
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img-wrap">
+        <img class="img-main" src="https://www.requitdesign.com/cdn/shop/files/DAF50323-24BB-414B-A316-50C8299CB8A4.png?v=1770024931&width=800" alt="AirPod Case 4th Gen">
+        <img class="img-hover" src="https://www.requitdesign.com/cdn/shop/files/A1BA72D9-BCD0-43F7-A3B1-9D7B0A07191B.png?v=1770024931&width=800" alt="AirPod Case 4th Gen – Alternate">
+      </div>
+      <div class="product-info">
+        <div class="product-tag">AirPods 4. Generation</div>
+        <div class="product-name">Signature Case — Gen 4</div>
+        <div class="product-desc">The newest AirPods deserve the newest case. Futuristic form meets everyday function.</div>
+        <div class="product-footer">
+          <div class="product-price">ab €26,99 <small>EUR</small></div>
+          <a href="product-gen4.html" class="product-btn">
+            View Details →
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="about-image reveal">
+    <img src="https://www.requitdesign.com/cdn/shop/files/665205E0-A6DA-435A-8243-C9BD08425E83.png?v=1755097828&width=1200" alt="RequitDesign – Futuristic Design">
+  </div>
+  <div class="about-content reveal reveal-delay-1">
+    <div class="section-label">About RequitDesign</div>
+    <h2 class="section-title">Made for Those Who Stand Out</h2>
+    <p class="about-text">
+      We believe accessories aren't just protection — they're an extension of who you are. RequitDesign was born from the conviction that small things can carry big meaning.
+    </p>
+    <p class="about-text">
+      Every case we design is crafted in limited batches, ensuring exclusivity without compromise. Futuristic aesthetics, premium materials, and a perfect fit — for AirPods that deserve to be noticed.
+    </p>
+    <div class="about-stat-row">
+      <div class="about-stat">
+        <span class="about-stat-num">100%</span>
+        <span class="about-stat-label">Premium Materials</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">2</span>
+        <span class="about-stat-label">Signature Models</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">★ 5.0</span>
+        <span class="about-stat-label">Customer Rating</span>
+      </div>
+    </div>
+    <a href="https://www.requitdesign.com/en/pages/uber-uns" target="_blank" class="btn-ghost" style="align-self: flex-start; margin-top: 8px;">
+      Learn more →
+    </a>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-label">What People Say</div>
+    <h2 class="section-title">Loved by Customers</h2>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"Materials feel sturdy, it fits perfectly on the AirPods, and it just looks amazing. I definitely recommend it! (Also thanks for the gummy bears 🐻)"</p>
+      <div class="reviewer-name">— Arnaud</div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"The best accessory for AirPods I've ever bought. The design is incredible. I would buy it again without hesitation."</p>
+      <div class="reviewer-name">— Quique</div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"The packaging is very high quality, the delivery time was exactly as described. A premium unboxing experience from start to finish."</p>
+      <div class="reviewer-name">— Tim</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">RequitDesign</div>
+    <p class="footer-tagline">Unique AirPods Cases. Premium quality. Limited availability. Designed for those who stand out.</p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="products.html">All Products</a>
+      <a href="product-pro.html">AirPods Pro Case</a>
+      <a href="product-gen4.html">AirPods 4th Gen Case</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="shipping-policy.html">Shipping</a>
+    </div>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  <p>© 2025 RequitDesign. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="http://instagram.com/requitdesign" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@requitdesign" target="_blank">TikTok</a>
+  </div>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Update cart count display
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('requitdesign-cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+  }
+
+  // Initialize cart count on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>
+
+</body>
+</html>
+
+

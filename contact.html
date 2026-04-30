@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact – RequitDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #b8924e;
+    --accent2: #a6804a;
+    --dark: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f9f9f9;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --accent-text: #1a1000;
+    --font: 'DM Sans', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 52px;
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-size: 15px; color: #ffffff; text-decoration: none;
+    font-weight: 700; letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px; color: #ffffff;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-size: 13px; padding: 7px 18px;
+    background: var(--accent); color: var(--accent-text);
+    border-radius: 20px; text-decoration: none; font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--accent2); transform: scale(1.03); }
+
+  .page-hero {
+    padding: 140px 48px 72px;
+    max-width: 900px; margin: 0 auto;
+    border-bottom: 0.5px solid var(--border);
+    text-align: center;
+  }
+
+  .page-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+
+  .page-title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 600; letter-spacing: -0.025em; line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .content-section {
+    max-width: 700px; margin: 0 auto;
+    padding: 80px 48px;
+  }
+
+  .contact-methods {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 40px; margin: 60px 0;
+  }
+
+  .contact-method {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    text-align: center;
+  }
+
+  .contact-method h3 {
+    font-size: 18px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .contact-method p {
+    font-size: 14px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .contact-method a {
+    color: var(--accent); text-decoration: none; font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .contact-method a:hover { color: var(--accent2); }
+
+  .text-content {
+    font-size: 15px; color: var(--muted); line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: start;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--text); margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 300px;
+  }
+
+  .footer-links { display: flex; gap: 48px; }
+
+  .footer-col h4 {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+
+  .footer-col a {
+    display: block; font-size: 13px; color: var(--muted);
+    text-decoration: none; margin-bottom: 10px; transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 0.5px solid var(--border);
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-bottom p { font-size: 12px; color: var(--muted); }
+
+  .footer-socials { display: flex; gap: 20px; }
+
+  .footer-socials a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.2s;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .page-hero { padding: 120px 24px 48px; }
+    .content-section { padding: 40px 24px; }
+    .contact-methods { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; padding: 40px 24px; }
+    .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="Requitdesign-1.html" class="nav-logo">RequitDesign</a>
+  <ul class="nav-links">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="products.html" class="nav-cta">Shop Now</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">Get In Touch</div>
+  <h1 class="page-title">Contact Us</h1>
+  <p class="page-meta">We'd love to hear from you. Reach out anytime.</p>
+</div>
+
+<div class="content-section">
+  <p class="text-content">
+    Have a question about our products? Need support with your order? Or just want to say hi? We're here for you.
+  </p>
+
+  <div class="contact-methods">
+    <div class="contact-method">
+      <h3>Email</h3>
+      <p>For inquiries and support</p>
+      <a href="https://www.requitdesign.com/en/pages/contact" target="_blank">Contact Form →</a>
+    </div>
+    <div class="contact-method">
+      <h3>Social Media</h3>
+      <p>Follow us on Instagram and TikTok</p>
+      <a href="http://instagram.com/requitdesign" target="_blank">@requitdesign</a>
+    </div>
+  </div>
+
+  <p class="text-content">
+    We typically respond to all inquiries within 24-48 hours. For order-related questions, please include your order number if available.
+  </p>
+
+  <p class="text-content">
+    Our team is committed to providing you with the best possible service and support. Whether you have questions about our products, need technical assistance, or want to collaborate, we're always happy to connect with our community.
+  </p>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">RequitDesign</div>
+    <p class="footer-tagline">Unique AirPods Cases. Premium quality. Limited availability. Designed for those who stand out.</p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="products.html">All Products</a>
+      <a href="product-pro.html">AirPods Pro Case</a>
+      <a href="product-gen4.html">AirPods 4th Gen Case</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="shipping-policy.html">Shipping</a>
+    </div>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  <p>© 2025 RequitDesign. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="http://instagram.com/requitdesign" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@requitdesign" target="_blank">TikTok</a>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+

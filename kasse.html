@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kasse – RequitDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #b8924e;
+    --accent2: #a6804a;
+    --dark: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f9f9f9;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --accent-text: #1a1000;
+    --font: 'DM Sans', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #c8a97e;
+      --accent2: #e8d5b0;
+      --dark: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #f5f5f7;
+      --muted: #86868b;
+      --border: rgba(255,255,255,0.08);
+      --accent-text: #1a1000;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* CHECKOUT */
+  .checkout-container {
+    max-width: 1200px; margin: 0 auto; padding: 80px 48px;
+    display: grid; grid-template-columns: 1fr 400px; gap: 48px;
+  }
+
+  .checkout-form {
+    background: var(--surface); border-radius: 16px;
+    border: 1px solid var(--border); padding: 32px;
+  }
+
+  .checkout-section {
+    margin-bottom: 32px;
+  }
+
+  .checkout-section h2 {
+    font-size: 20px; font-weight: 600; margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block; font-size: 14px; color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%; padding: 12px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--surface);
+    color: var(--text); font-size: 14px;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none; border-color: var(--accent);
+  }
+
+  .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .payment-methods {
+    display: grid; gap: 12px;
+  }
+
+  .payment-method {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--surface);
+    cursor: pointer; transition: border-color 0.2s;
+  }
+
+  .payment-method:hover {
+    border-color: var(--accent);
+  }
+
+  .payment-method input[type="radio"] {
+    display: none;
+  }
+
+  .payment-method.selected {
+    border-color: var(--accent);
+  }
+
+  .payment-icon {
+    width: 32px; height: 24px; object-fit: contain;
+  }
+
+  .checkout-summary {
+    background: var(--surface); border-radius: 16px;
+    border: 1px solid var(--border); padding: 32px;
+    position: sticky; top: 20px;
+  }
+
+  .summary-item {
+    display: flex; justify-content: space-between;
+    margin-bottom: 16px; font-size: 14px;
+  }
+
+  .summary-total {
+    display: flex; justify-content: space-between;
+    font-size: 18px; font-weight: 600; color: var(--accent);
+    border-top: 1px solid var(--border); padding-top: 16px;
+    margin-top: 16px;
+  }
+
+  .checkout-btn {
+    width: 100%; padding: 16px; border-radius: 30px;
+    background: var(--accent); color: var(--accent-text);
+    border: none; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    margin-top: 24px;
+  }
+
+  .checkout-btn:hover { background: var(--accent2); transform: scale(1.02); }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: start;
+    max-width: 100%;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; letter-spacing: 0.05em;
+    color: var(--text);
+  }
+
+  .footer-links {
+    display: flex; gap: 24px;
+  }
+
+  .footer-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-socials {
+    display: flex; gap: 16px; margin-top: 16px;
+  }
+
+  .footer-socials a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; transition: color 0.2s;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .checkout-container { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    .checkout-form { padding: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <div class="checkout-container">
+    <div class="checkout-form">
+      <div class="checkout-section">
+        <h2>Kontakt</h2>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" placeholder="ihre@email.com">
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h2>Lieferung</h2>
+        <div class="form-group">
+          <label for="country">Land / Region</label>
+          <select id="country">
+            <option>Deutschland</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstname">Vorname</label>
+            <input type="text" id="firstname">
+          </div>
+          <div class="form-group">
+            <label for="lastname">Nachname</label>
+            <input type="text" id="lastname">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">Adresse</label>
+          <input type="text" id="address" placeholder="Straße und Hausnummer">
+        </div>
+        <div class="form-group">
+          <label for="apartment">Wohnung, Zimmer, usw. (optional)</label>
+          <input type="text" id="apartment">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zip">Postleitzahl</label>
+            <input type="text" id="zip">
+          </div>
+          <div class="form-group">
+            <label for="city">Stadt</label>
+            <input type="text" id="city">
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h2>Versand</h2>
+        <p>Gib deine Lieferadresse ein, um verfügbare Versandarten anzuzeigen.</p>
+      </div>
+
+      <div class="checkout-section">
+        <h2>Zahlung</h2>
+        <p>Alle Transaktionen sind sicher und verschlüsselt.</p>
+        <div class="payment-methods">
+          <div class="payment-method selected" data-method="credit-card">
+            <input type="radio" name="payment" value="credit-card" checked>
+            <img src="https://www.requitdesign.com/cdn/shopifycloud/checkout-web/assets/c1/assets/visa.sxIq5Dot.svg" alt="VISA" class="payment-icon">
+            <span>Kreditkarte</span>
+          </div>
+          <div class="payment-method" data-method="paypal">
+            <input type="radio" name="payment" value="paypal">
+            <img src="https://www.requitdesign.com/cdn/shopifycloud/checkout-web/assets/c1/assets/paypal-logo.Q2f7XzPy.svg" alt="PayPal" class="payment-icon">
+            <span>PayPal</span>
+          </div>
+          <div class="payment-method" data-method="klarna">
+            <input type="radio" name="payment" value="klarna">
+            <img src="https://www.requitdesign.com/cdn/shopifycloud/checkout-web/assets/c1/assets/klarna.s27CILOb.svg" alt="Klarna" class="payment-icon">
+            <span>Klarna</span>
+          </div>
+        </div>
+        <div id="credit-card-fields" class="payment-fields">
+          <div class="form-group">
+            <label for="cardnumber">Kartennummer</label>
+            <input type="text" id="cardnumber" placeholder="1234 5678 9012 3456">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiry">Gültig bis (MM/JJ)</label>
+              <input type="text" id="expiry" placeholder="MM/JJ">
+            </div>
+            <div class="form-group">
+              <label for="cvv">Sicherheitscode</label>
+              <input type="text" id="cvv" placeholder="123">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardname">Name des Karteninhabers</label>
+            <input type="text" id="cardname">
+          </div>
+        </div>
+        <div id="paypal-fields" class="payment-fields" style="display: none;">
+          <p>Sie werden zu PayPal weitergeleitet, um Ihre Zahlung abzuschließen.</p>
+        </div>
+        <div id="klarna-fields" class="payment-fields" style="display: none;">
+          <p>Mit Klarna können Sie bequem in Raten zahlen. Sie werden zu Klarna weitergeleitet.</p>
+          <div class="form-group">
+            <label for="phone">Mobiltelefon (optional)</label>
+            <input type="text" id="phone" placeholder="+49">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-summary">
+      <h2>Bestellübersicht</h2>
+      <div id="summary-items">
+        <!-- Items will be inserted here -->
+      </div>
+      <div class="summary-total">
+        <span>Gesamt</span>
+        <span id="total-price">€0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="completeOrder()">Bestellung abschließen</button>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <div class="footer-brand">RequitDesign</div>
+      <p class="footer-tagline">Unique AirPods Cases. Premium quality. Limited availability. Designed for those who stand out.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <a href="privacy-policy.html">Datenschutz</a><br>
+        <a href="refund-policy.html">Rückgaberecht</a><br>
+        <a href="shipping-policy.html">Versand</a>
+      </div>
+      <div class="footer-socials">
+        <a href="http://instagram.com/requitdesign" target="_blank">Instagram</a>
+        <a href="https://www.tiktok.com/@requitdesign" target="_blank">TikTok</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Load cart and display summary
+    const cart = JSON.parse(localStorage.getItem('requitdesign-cart')) || [];
+    const summaryItems = document.getElementById('summary-items');
+    const totalPrice = document.getElementById('total-price');
+    let total = 0;
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      summaryItems.innerHTML += `
+        <div class="summary-item">
+          <span>${item.name} x${item.quantity}</span>
+          <span>€${itemTotal.toFixed(2)}</span>
+        </div>
+      `;
+    });
+
+    totalPrice.textContent = `€${total.toFixed(2)}`;
+
+    // Update cart count
+    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    const paymentFields = {
+      'credit-card': document.getElementById('credit-card-fields'),
+      'paypal': document.getElementById('paypal-fields'),
+      'klarna': document.getElementById('klarna-fields')
+    };
+
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', () => {
+        // Remove selected class from all
+        paymentMethods.forEach(m => m.classList.remove('selected'));
+        // Add selected class to clicked
+        method.classList.add('selected');
+        // Check the radio button
+        method.querySelector('input[type="radio"]').checked = true;
+        // Hide all fields
+        Object.values(paymentFields).forEach(field => field.style.display = 'none');
+        // Show selected fields
+        const methodType = method.dataset.method;
+        if (paymentFields[methodType]) {
+          paymentFields[methodType].style.display = 'block';
+        }
+      });
+    });
+
+    // Complete order function
+    function completeOrder() {
+      const email = document.getElementById('email').value.trim();
+      const firstname = document.getElementById('firstname').value.trim();
+      const lastname = document.getElementById('lastname').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const zip = document.getElementById('zip').value.trim();
+      const city = document.getElementById('city').value.trim();
+
+      // Validate required fields
+      if (!email || !firstname || !lastname || !address || !zip || !city) {
+        alert('Bitte füllen Sie alle erforderlichen Felder aus.');
+        return;
+      }
+
+      if (!email.includes('@')) {
+        alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+        return;
+      }
+
+      // Clear cart
+      localStorage.removeItem('requitdesign-cart');
+      
+      // Redirect to success page
+      window.location.href = 'bestellung-erfolgreich.html';
+    }
+  </script>
+</body>
+</html>
