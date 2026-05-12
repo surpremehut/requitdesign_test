@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmelden - RequitDesign</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --accent: #b8924e;
+      --accent2: #a6804a;
+      --dark: #f5f5f7;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #666666;
+      --border: rgba(0,0,0,0.08);
+      --font: 'DM Sans', sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #c8a97e;
+        --accent2: #e8d5b0;
+        --dark: #0a0a0a;
+        --surface: #111111;
+        --surface2: #1a1a1a;
+        --text: #f5f5f7;
+        --muted: #86868b;
+        --border: rgba(255,255,255,0.08);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--dark);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 10px;
+    }
+
+    .login-button:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+    }
+
+    .login-button.loading {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .register-link a:hover {
+      color: var(--accent2);
+    }
+
+    .success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .success.show {
+      display: block;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 52px;
+      background: rgba(10,10,10,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; letter-spacing: 0.05em;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px; color: white;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-size: 13px; padding: 7px 18px;
+      background: var(--accent); color: var(--accent-text);
+      border-radius: 20px; text-decoration: none; font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { 
+      background: var(--accent2);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+      
+      .nav-links {
+        gap: 16px;
+      }
+
+      .login-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">RequitDesign</a>
+    <ul class="nav-links">
+      <li><a href="/products">Produkte</a></li>
+      <li><a href="/about.html">Über uns</a></li>
+      <li><a href="/contact.html">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <div class="login-container" style="margin-top: 60px;">
+    <div class="login-header">
+      <h1>Anmelden</h1>
+      <p>Melde dich in deinem Konto an</p>
+    </div>
+
+    <div class="success" id="successMsg"></div>
+    <div class="error" id="errorMsg"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" name="email" required placeholder="deine@email.de">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Passwort</label>
+        <input type="password" id="password" name="password" required placeholder="••••••••">
+      </div>
+
+      <button type="submit" class="login-button">Anmelden</button>
+
+      <div style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--muted);">
+        🧪 Admin: admin@requitdesign.de / Admin123!
+      </div>
+    </form>
+
+    <div class="register-link">
+      Noch kein Konto? <a href="/register.html">Jetzt registrieren</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    const button = form.querySelector('button');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.remove('show');
+      successMsg.classList.remove('show');
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      button.classList.add('loading');
+      button.disabled = true;
+      button.textContent = 'Wird angemeldet...';
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          successMsg.textContent = data.message;
+          successMsg.classList.add('show');
+          
+          // Weiterleiten zum Admin-Dashboard wenn Admin
+          setTimeout(() => {
+            if (data.user.role === 'admin') {
+              window.location.href = '/admin.html';
+            } else {
+              window.location.href = '/';
+            }
+          }, 1000);
+        } else {
+          errorMsg.textContent = data.error || 'Anmeldefehler';
+          errorMsg.classList.add('show');
+        }
+      } catch (error) {
+        errorMsg.textContent = 'Verbindungsfehler';
+        errorMsg.classList.add('show');
+      } finally {
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.textContent = 'Anmelden';
+      }
+    });
+  </script>
+</body>
+</html>
