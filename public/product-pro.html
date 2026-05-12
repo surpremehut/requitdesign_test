@@ -183,11 +183,11 @@
   .color-option {
     width: 40px; height: 40px; border-radius: 50%;
     border: 2px solid transparent;
-    cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+    cursor: pointer; transition: border-color 0.2s, transform 0.15s, opacity 0.2s;
     position: relative;
   }
 
-  .color-option:hover {
+  .color-option:hover:not(.sold-out) {
     transform: scale(1.1);
   }
 
@@ -198,6 +198,22 @@
   .color-option.black { background: #1a1a1a; }
   .color-option.white { background: #f5f5f7; }
   .color-option.chrome { background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%); }
+
+  .color-option.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .color-option.sold-out::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    right: -5px;
+    height: 2px;
+    background: #dc2626;
+    transform: translateY(-50%) rotate(-45deg);
+  }
 
   .quantity-selector {
     display: flex; align-items: center; gap: 16px;
@@ -465,18 +481,33 @@
   class ColorSelector {
     constructor() {
       this.selectedColor = 'black';
+      this.availableColors = new Set();
       this.init();
     }
 
     init() {
       const colorOptions = document.querySelectorAll('.color-option');
       colorOptions.forEach(option => {
-        option.addEventListener('click', () => this.selectColor(option));
+        const color = option.dataset.color;
+        if (!option.classList.contains('sold-out')) {
+          this.availableColors.add(color);
+        }
+        
+        if (!option.classList.contains('sold-out')) {
+          option.addEventListener('click', () => this.selectColor(option));
+        }
       });
-      this.selectColor(document.querySelector('.color-option.black'));
+      
+      // Wähle die erste verfügbare Farbe aus
+      const firstAvailable = document.querySelector('.color-option:not(.sold-out)');
+      if (firstAvailable) {
+        this.selectColor(firstAvailable);
+      }
     }
 
     selectColor(option) {
+      if (option.classList.contains('sold-out')) return;
+      
       document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       this.selectedColor = option.dataset.color;
@@ -603,6 +634,9 @@
         tagLabel.textContent = activeProduct.category === 'Pro' ? 'AirPods Pro 1 & 2' : activeProduct.category;
       }
 
+      // Fetch color availability from database
+      await loadColorAvailability();
+
       if (activeProduct.sold_out) {
         button.textContent = 'Ausverkauft';
         button.disabled = true;
@@ -616,6 +650,47 @@
       }
     } catch (error) {
       console.error('Fehler beim Laden des Produktstatus:', error);
+    }
+  }
+
+  async function loadColorAvailability() {
+    try {
+      const res = await fetch('/api/products?model=Pro');
+      const products = await res.json();
+      
+      if (!products.length) return;
+      
+      // Collect all colors from all Pro products
+      const colorAvailability = {};
+      
+      products.forEach(product => {
+        if (product.colors && Array.isArray(product.colors)) {
+          product.colors.forEach(color => {
+            if (!colorAvailability[color.color]) {
+              colorAvailability[color.color] = color.available;
+            }
+          });
+        }
+      });
+      
+      // Update UI based on color availability
+      document.querySelectorAll('.color-option').forEach(colorElement => {
+        const colorName = colorElement.dataset.color;
+        
+        // Check if color is available in our availability map
+        if (colorAvailability.hasOwnProperty(colorName)) {
+          if (!colorAvailability[colorName]) {
+            colorElement.classList.add('sold-out');
+          }
+        }
+      });
+      
+      // Reinitialize color selector to handle sold out colors
+      if (window.colorSelector) {
+        window.colorSelector.init();
+      }
+    } catch (error) {
+      console.debug('Fehler beim Laden der Farbverfügbarkeit:', error);
     }
   }
 

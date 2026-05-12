@@ -30,28 +30,34 @@ const initialize = () => {
         if (err) reject(err);
       });
 
-      // Produkte Tabelle
+      // Hauptprodukte Tabelle (Pro, Gen 4)
       db.run(`
         CREATE TABLE IF NOT EXISTS products (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           description TEXT,
           price REAL NOT NULL,
-          image TEXT,
+          category TEXT NOT NULL,
           stock INTEGER DEFAULT 0,
           sold_out BOOLEAN DEFAULT 0,
-          category TEXT,
-          color TEXT,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       `, (err) => {
         if (err) reject(err);
       });
 
-      db.run(`ALTER TABLE products ADD COLUMN color TEXT`, (err) => {
-        if (err && !err.message.includes('duplicate column')) {
-          reject(err);
-        }
+      // Farbvarianten pro Produkt
+      db.run(`
+        CREATE TABLE IF NOT EXISTS product_colors (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          product_id INTEGER NOT NULL,
+          color TEXT NOT NULL,
+          available BOOLEAN DEFAULT 1,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY(product_id) REFERENCES products(id)
+        )
+      `, (err) => {
+        if (err) reject(err);
       });
 
       // Bestellungen Tabelle
@@ -125,36 +131,49 @@ const initialize = () => {
           const products = [
             {
               name: 'Signature Case — Pro',
-              description: 'Elegantes Classic Gold Case für AirPods Pro. Hochwertiger Schutz mit Premium-Finish.',
+              description: 'Elegantes Case für AirPods Pro mit Premium-Finish.',
               price: 29.99,
               stock: 50,
               category: 'Pro',
-              color: 'Classic Gold'
+              colors: [{ name: 'schwarz', available: true }, { name: 'weiß', available: true }, { name: 'chrome', available: true }]
             },
             {
               name: 'Signature Case — Gen 4',
-              description: 'Roses Rose Pink Case für AirPods Generation 4. Stilvoller Look mit maximalem Schutz.',
+              description: 'Stilvolles Case für AirPods Generation 4 mit maximalem Schutz.',
               price: 24.99,
               stock: 30,
               category: 'Gen 4',
-              color: 'Rose Pink'
+              colors: [{ name: 'schwarz', available: true }, { name: 'chrome', available: true }]
             },
             {
-              name: 'Signature Case — Pro',
-              description: 'Klassisches Midnight Black Case für AirPods Pro. Premium-Schutz mit eleganter Optik.',
+              name: 'Signature Case — Pro (Black)',
+              description: 'Klassisches Midnight Black Case für AirPods Pro.',
               price: 29.99,
               stock: 0,
               category: 'Pro',
-              color: 'Midnight Black',
+              colors: [{ name: 'schwarz', available: false }],
               sold_out: 1
             }
           ];
 
           products.forEach(product => {
+            const colors = product.colors || [];
             db.run(
-              `INSERT INTO products (name, description, price, stock, category, color, sold_out) 
-               VALUES (?, ?, ?, ?, ?, ?, ?)`,
-              [product.name, product.description, product.price, product.stock, product.category, product.color || '', product.sold_out || 0]
+              `INSERT INTO products (name, description, price, stock, category, sold_out) 
+               VALUES (?, ?, ?, ?, ?, ?)`,
+              [product.name, product.description, product.price, product.stock, product.category, product.sold_out || 0],
+              function(err) {
+                if (!err) {
+                  const productId = this.lastID;
+                  // Insert colors for this product
+                  colors.forEach(color => {
+                    db.run(
+                      `INSERT INTO product_colors (product_id, color, available) VALUES (?, ?, ?)`,
+                      [productId, color.name, color.available ? 1 : 0]
+                    );
+                  });
+                }
+              }
             );
           });
           console.log('Demo-Produkte erstellt');
