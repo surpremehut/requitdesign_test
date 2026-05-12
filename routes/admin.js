@@ -25,16 +25,16 @@ router.get('/products', isAdmin, async (req, res) => {
 // Produkt hinzufügen
 router.post('/products', isAdmin, async (req, res) => {
   try {
-    const { name, description, price, stock, category } = req.body;
+    const { name, description, price, stock, category, color, sold_out } = req.body;
 
     if (!name || !price) {
       return res.status(400).json({ error: 'Name und Preis erforderlich' });
     }
 
     const result = await db.run(
-      `INSERT INTO products (name, description, price, stock, category) 
-       VALUES (?, ?, ?, ?, ?)`,
-      [name, description || '', price, stock || 0, category || '']
+      `INSERT INTO products (name, description, price, stock, category, color, sold_out) 
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [name, description || '', price, stock || 0, category || '', color || '', sold_out ? 1 : 0]
     );
 
     res.json({ 
@@ -51,13 +51,13 @@ router.post('/products', isAdmin, async (req, res) => {
 // Produkt bearbeiten
 router.put('/products/:id', isAdmin, async (req, res) => {
   try {
-    const { name, description, price, stock, sold_out, category } = req.body;
+    const { name, description, price, stock, sold_out, category, color } = req.body;
     const productId = req.params.id;
 
     await db.run(
-      `UPDATE products SET name = ?, description = ?, price = ?, stock = ?, sold_out = ?, category = ? 
+      `UPDATE products SET name = ?, description = ?, price = ?, stock = ?, sold_out = ?, category = ?, color = ? 
        WHERE id = ?`,
-      [name, description, price, stock, sold_out ? 1 : 0, category, productId]
+      [name, description, price, stock, sold_out ? 1 : 0, category, color || '', productId]
     );
 
     res.json({ success: true, message: 'Produkt aktualisiert' });

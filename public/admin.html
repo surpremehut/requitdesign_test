@@ -475,7 +475,9 @@
             <table id="productsTable">
               <thead>
                 <tr>
-                  <th>Name</th>
+                      <th>Name</th>
+                  <th>Kategorie</th>
+                  <th>Farbe</th>
                   <th>Preis</th>
                   <th>Lager</th>
                   <th>Ausverkauft</th>
@@ -559,7 +561,14 @@
         </div>
         <div class="form-group">
           <label>Kategorie</label>
-          <input type="text" id="productCategory">
+          <select id="productCategory">
+            <option value="Pro">AirPods Pro</option>
+            <option value="Gen 4">AirPods Gen 4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Farbe</label>
+          <input type="text" id="productColor" placeholder="z. B. Classic Gold">
         </div>
         <div class="form-group">
           <label>
@@ -626,6 +635,8 @@
         tbody.innerHTML = products.map(p => `
           <tr>
             <td>${p.name}</td>
+            <td>${p.category || '-'}</td>
+            <td>${p.color || '-'}</td>
             <td>${p.price.toFixed(2)}€</td>
             <td>${p.stock}</td>
             <td>${p.sold_out ? '✓ Ja' : 'Nein'}</td>
@@ -713,6 +724,7 @@
         price: parseFloat(document.getElementById('productPrice').value),
         stock: parseInt(document.getElementById('productStock').value),
         category: document.getElementById('productCategory').value,
+        color: document.getElementById('productColor').value,
         sold_out: document.getElementById('productSoldOut').checked
       };
 
@@ -743,8 +755,24 @@
     });
 
     async function editProduct(productId) {
-      // In production, you would fetch the product data first
-      openProductModal(productId);
+      try {
+        const res = await fetch(`/api/products/${productId}`);
+        if (!res.ok) throw new Error('Produkt nicht gefunden');
+
+        const product = await res.json();
+        openProductModal(productId);
+
+        document.getElementById('productName').value = product.name || '';
+        document.getElementById('productDescription').value = product.description || '';
+        document.getElementById('productPrice').value = product.price || 0;
+        document.getElementById('productStock').value = product.stock || 0;
+        document.getElementById('productCategory').value = product.category || 'Pro';
+        document.getElementById('productColor').value = product.color || '';
+        document.getElementById('productSoldOut').checked = !!product.sold_out;
+      } catch (error) {
+        console.error('Fehler beim Laden des Produkts:', error);
+        alert('Produkt konnte nicht geladen werden.');
+      }
     }
 
     async function deleteProduct(productId) {

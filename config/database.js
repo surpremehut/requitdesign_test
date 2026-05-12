@@ -41,10 +41,17 @@ const initialize = () => {
           stock INTEGER DEFAULT 0,
           sold_out BOOLEAN DEFAULT 0,
           category TEXT,
+          color TEXT,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       `, (err) => {
         if (err) reject(err);
+      });
+
+      db.run(`ALTER TABLE products ADD COLUMN color TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+          reject(err);
+        }
       });
 
       // Bestellungen Tabelle
@@ -117,34 +124,37 @@ const initialize = () => {
         if (rows && rows[0].count === 0) {
           const products = [
             {
-              name: 'AirPods Pro Case - Classic Gold',
-              description: 'Elegante Schutzhülle mit luxuriösem Goldfinish',
+              name: 'Signature Case — Pro',
+              description: 'Elegantes Classic Gold Case für AirPods Pro. Hochwertiger Schutz mit Premium-Finish.',
               price: 29.99,
               stock: 50,
-              category: 'AirPods Pro'
+              category: 'Pro',
+              color: 'Classic Gold'
             },
             {
-              name: 'AirPods Gen 4 Case - Rose Pink',
-              description: 'Stilvolle rosa Schutzhülle für AirPods Generation 4',
+              name: 'Signature Case — Gen 4',
+              description: 'Roses Rose Pink Case für AirPods Generation 4. Stilvoller Look mit maximalem Schutz.',
               price: 24.99,
               stock: 30,
-              category: 'AirPods Gen 4'
+              category: 'Gen 4',
+              color: 'Rose Pink'
             },
             {
-              name: 'AirPods Pro Case - Midnight Black',
-              description: 'Klassische schwarze Schutzhülle mit Premium-Material',
+              name: 'Signature Case — Pro',
+              description: 'Klassisches Midnight Black Case für AirPods Pro. Premium-Schutz mit eleganter Optik.',
               price: 29.99,
               stock: 0,
-              category: 'AirPods Pro',
+              category: 'Pro',
+              color: 'Midnight Black',
               sold_out: 1
             }
           ];
 
           products.forEach(product => {
             db.run(
-              `INSERT INTO products (name, description, price, stock, category, sold_out) 
-               VALUES (?, ?, ?, ?, ?, ?)`,
-              [product.name, product.description, product.price, product.stock, product.category, product.sold_out]
+              `INSERT INTO products (name, description, price, stock, category, color, sold_out) 
+               VALUES (?, ?, ?, ?, ?, ?, ?)`,
+              [product.name, product.description, product.price, product.stock, product.category, product.color || '', product.sold_out || 0]
             );
           });
           console.log('Demo-Produkte erstellt');

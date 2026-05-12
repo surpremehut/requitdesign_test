@@ -124,6 +124,24 @@
     border-color: rgba(200,169,126,0.35);
   }
 
+  .product-meta {
+    font-size: 13px; color: var(--muted); margin-top: 6px;
+  }
+
+  .sold-out-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    color: #ffffff; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .product-card.sold-out .product-btn {
+    pointer-events: none;
+    opacity: 0.6;
+    background: #999;
+  }
+
   .product-img-wrap {
     position: relative; overflow: hidden;
     aspect-ratio: 4/3;
@@ -259,36 +277,8 @@
 </div>
 
 <div class="content-section">
-  <div class="product-grid">
-    
-    <!-- Product 1: Pro -->
-    <div class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://www.requitdesign.com/cdn/shop/files/IMG-2942.jpg?v=1769554911&width=800" alt="AirPod Case Pro">
-      </div>
-      <div class="product-info">
-        <div class="product-tag">AirPods Pro 1 & 2</div>
-        <div class="product-name">Signature Case — Pro</div>
-        <div class="product-desc">Sculptural protection for your AirPods Pro. Crafted with premium materials, designed with intention.</div>
-        <div class="product-price">ab €26,99</div>
-        <a href="product-pro.html" class="product-btn">View Details →</a>
-      </div>
-    </div>
-
-    <!-- Product 2: 4th Gen -->
-    <div class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://www.requitdesign.com/cdn/shop/files/DAF50323-24BB-414B-A316-50C8299CB8A4.png?v=1770024931&width=800" alt="AirPod Case 4th Gen">
-      </div>
-      <div class="product-info">
-        <div class="product-tag">AirPods 4. Generation</div>
-        <div class="product-name">Signature Case — Gen 4</div>
-        <div class="product-desc">The newest AirPods deserve the newest case. Futuristic form meets everyday function.</div>
-        <div class="product-price">ab €26,99</div>
-        <a href="product-gen4.html" class="product-btn">View Details →</a>
-      </div>
-    </div>
-
+  <div class="product-grid" id="productGrid">
+    <div style="grid-column: 1 / -1; text-align: center; color: var(--muted);">Produkte werden geladen…</div>
   </div>
 </div>
 
@@ -321,6 +311,62 @@
   </div>
 </div>
 
+<script>
+  const productGrid = document.getElementById('productGrid');
+
+  function getProductImage(product) {
+    if (product.category && product.category.toLowerCase().includes('pro')) {
+      return 'https://www.requitdesign.com/cdn/shop/files/IMG-2942.jpg?v=1769554911&width=800';
+    }
+    return 'https://www.requitdesign.com/cdn/shop/files/DAF50323-24BB-414B-A316-50C8299CB8A4.png?v=1770024931&width=800';
+  }
+
+  function getProductLink(product) {
+    if (product.category && product.category.toLowerCase().includes('gen')) {
+      return 'product-gen4.html';
+    }
+    return 'product-pro.html';
+  }
+
+  function getProductTag(product) {
+    if (product.category === 'Pro') return 'AirPods Pro 1 & 2';
+    if (product.category === 'Gen 4') return 'AirPods 4. Generation';
+    return product.category || 'AirPods Case';
+  }
+
+  async function loadProductsList() {
+    try {
+      const res = await fetch('/api/products');
+      const products = await res.json();
+
+      if (!products.length) {
+        productGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--muted);">Keine Produkte gefunden.</div>';
+        return;
+      }
+
+      productGrid.innerHTML = products.map(product => `
+        <div class="product-card${product.sold_out ? ' sold-out' : ''}">
+          <div class="product-img-wrap">
+            <img src="${getProductImage(product)}" alt="${product.name}">
+            ${product.sold_out ? '<div class="sold-out-overlay">Ausverkauft</div>' : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-tag">${getProductTag(product)}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-meta">${product.color ? product.color + ' • ' : ''}${product.description || ''}</div>
+            <div class="product-price">ab ${product.price.toFixed(2)}€</div>
+            <a href="${getProductLink(product)}" class="product-btn">${product.sold_out ? 'Nicht verfügbar' : 'View Details →'}</a>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Fehler beim Laden der Produkte:', error);
+      productGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--muted);">Fehler beim Laden der Produkte.</div>';
+    }
+  }
+
+  loadProductsList();
+</script>
 </body>
 </html>
 

@@ -583,6 +583,42 @@
     }
   }
 
+  async function loadProductStatus(model) {
+    try {
+      const res = await fetch(`/api/products?model=${encodeURIComponent(model)}`);
+      const products = await res.json();
+      if (!products.length) return;
+
+      const activeProduct = products.find(p => !p.sold_out) || products[0];
+      const button = document.querySelector('.add-to-cart-btn');
+      const productTitle = document.querySelector('.product-hero-content h1');
+      const productDesc = document.querySelector('.product-desc');
+      const priceLabel = document.querySelector('.product-price');
+      const tagLabel = document.querySelector('.product-tag');
+
+      if (activeProduct) {
+        productTitle.textContent = activeProduct.name;
+        productDesc.textContent = activeProduct.description || productDesc.textContent;
+        priceLabel.textContent = `ab ${activeProduct.price.toFixed(2)}€`;
+        tagLabel.textContent = activeProduct.category === 'Pro' ? 'AirPods Pro 1 & 2' : activeProduct.category;
+      }
+
+      if (activeProduct.sold_out) {
+        button.textContent = 'Ausverkauft';
+        button.disabled = true;
+        button.style.cursor = 'not-allowed';
+        button.classList.add('disabled');
+
+        const soldBadge = document.createElement('div');
+        soldBadge.textContent = 'Ausverkauft';
+        soldBadge.style.cssText = 'margin-top: 20px; display: inline-flex; background: #dc2626; color: white; padding: 10px 16px; border-radius: 999px; font-weight: 700;';
+        button.closest('.product-hero-content').appendChild(soldBadge);
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden des Produktstatus:', error);
+    }
+  }
+
   // Initialize everything when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
     window.carousel = new ProductCarousel();
@@ -592,6 +628,7 @@
 
     // Update cart count display
     updateCartCount();
+    loadProductStatus('Pro');
   });
 
   function updateCartCount() {

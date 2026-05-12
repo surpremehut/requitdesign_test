@@ -276,6 +276,26 @@
     border-color: rgba(200,169,126,0.35);
   }
 
+  .product-card.sold-out .product-btn {
+    pointer-events: none;
+    opacity: 0.6;
+    background: #999;
+  }
+
+  .sold-out-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.55);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .product-img-wrap {
     position: relative; overflow: hidden;
     aspect-ratio: 4/3;
@@ -697,46 +717,8 @@ updateAuthUI();
     <p class="section-sub">Two models. Infinite personality.</p>
   </div>
 
-  <div class="product-grid">
-
-    <!-- Product 1: Pro -->
-    <div class="product-card reveal">
-      <div class="product-img-wrap">
-        <img class="img-main" src="https://www.requitdesign.com/cdn/shop/files/IMG-2942.jpg?v=1769554911&width=800" alt="AirPod Case Pro">
-        <img class="img-hover" src="https://www.requitdesign.com/cdn/shop/files/IMG_0196.jpg?v=1769554911&width=800" alt="AirPod Case Pro – Alternate View">
-      </div>
-      <div class="product-info">
-        <div class="product-tag">AirPods Pro 1 &amp; 2</div>
-        <div class="product-name">Signature Case — Pro</div>
-        <div class="product-desc">Sculptural protection for your AirPods Pro. Crafted with premium materials, designed with intention.</div>
-        <div class="product-footer">
-          <div class="product-price">ab €26,99 <small>EUR</small></div>
-          <a href="product-pro.html" class="product-btn">
-            View Details →
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Product 2: 4th Gen -->
-    <div class="product-card reveal reveal-delay-1">
-      <div class="product-img-wrap">
-        <img class="img-main" src="https://www.requitdesign.com/cdn/shop/files/DAF50323-24BB-414B-A316-50C8299CB8A4.png?v=1770024931&width=800" alt="AirPod Case 4th Gen">
-        <img class="img-hover" src="https://www.requitdesign.com/cdn/shop/files/A1BA72D9-BCD0-43F7-A3B1-9D7B0A07191B.png?v=1770024931&width=800" alt="AirPod Case 4th Gen – Alternate">
-      </div>
-      <div class="product-info">
-        <div class="product-tag">AirPods 4. Generation</div>
-        <div class="product-name">Signature Case — Gen 4</div>
-        <div class="product-desc">The newest AirPods deserve the newest case. Futuristic form meets everyday function.</div>
-        <div class="product-footer">
-          <div class="product-price">ab €26,99 <small>EUR</small></div>
-          <a href="product-gen4.html" class="product-btn">
-            View Details →
-          </a>
-        </div>
-      </div>
-    </div>
-
+  <div class="product-grid" id="homepageProductGrid">
+    <div style="grid-column: 1 / -1; text-align: center; color: #666;">Produkte werden geladen…</div>
   </div>
 </section>
 
@@ -851,6 +833,62 @@ updateAuthUI();
 
   // Initialize cart count on page load
   document.addEventListener('DOMContentLoaded', updateCartCount);
+
+  const homepageProductGrid = document.getElementById('homepageProductGrid');
+
+  function getHomepageImage(product) {
+    if (product.category && product.category.toLowerCase().includes('pro')) {
+      return 'https://www.requitdesign.com/cdn/shop/files/IMG-2942.jpg?v=1769554911&width=800';
+    }
+    return 'https://www.requitdesign.com/cdn/shop/files/DAF50323-24BB-414B-A316-50C8299CB8A4.png?v=1770024931&width=800';
+  }
+
+  function getHomepageLink(product) {
+    if (product.category && product.category.toLowerCase().includes('gen')) {
+      return 'product-gen4.html';
+    }
+    return 'product-pro.html';
+  }
+
+  function getHomepageTag(product) {
+    if (product.category === 'Pro') return 'AirPods Pro 1 & 2';
+    if (product.category === 'Gen 4') return 'AirPods 4. Generation';
+    return product.category || 'AirPods Case';
+  }
+
+  async function loadHomepageProducts() {
+    try {
+      const res = await fetch('/api/products');
+      const products = await res.json();
+      if (!products.length) {
+        homepageProductGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #666;">Keine Produkte verfügbar.</div>';
+        return;
+      }
+
+      homepageProductGrid.innerHTML = products.map(product => `
+        <div class="product-card${product.sold_out ? ' sold-out' : ''}">
+          <div class="product-img-wrap">
+            <img class="img-main" src="${getHomepageImage(product)}" alt="${product.name}">
+            ${product.sold_out ? '<div class="sold-out-overlay">Ausverkauft</div>' : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-tag">${getHomepageTag(product)}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-desc">${product.color ? `${product.color} • ` : ''}${product.description || ''}</div>
+            <div class="product-footer">
+              <div class="product-price">ab ${product.price.toFixed(2)}€ <small>EUR</small></div>
+              <a href="${getHomepageLink(product)}" class="product-btn">${product.sold_out ? 'Ausverkauft' : 'View Details →'}</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Fehler beim Laden der Homepage-Produkte:', error);
+      homepageProductGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #666;">Fehler beim Laden der Produkte.</div>';
+    }
+  }
+
+  loadHomepageProducts();
 </script>
 
 </body>

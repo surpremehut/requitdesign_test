@@ -7,6 +7,7 @@ require('dotenv').config();
 const db = require('./config/database');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const productsRoutes = require('./routes/products');
 const cartRoutes = require('./routes/cart');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
 
 // Hauptseiten
